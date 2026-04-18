@@ -8,30 +8,29 @@
 <style>
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, Arial;
-    background: radial-gradient(circle at top, #0f2f6b, #061733);
+    font-family: -apple-system, Arial;
+    background: radial-gradient(circle at top, #15398f, #071532);
     color: white;
+    text-align: center;
 }
 
 .container {
-    max-width: 480px;
+    max-width: 500px;
     margin: auto;
     padding: 20px;
-    text-align: center;
 }
 
 /* LOGO */
 .logo img {
-    width: 260px;
+    width: 280px;
     margin: 20px 0;
 }
 
 /* SEARCH */
 .search-box {
-    border: 2px solid rgba(255,215,0,0.3);
-    border-radius: 14px;
-    padding: 15px;
-    transition: 0.3s;
+    border: 2px solid rgba(255,215,0,0.4);
+    border-radius: 16px;
+    padding: 12px;
 }
 
 .search-box.ready {
@@ -41,43 +40,52 @@ body {
 
 input {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     border-radius: 10px;
     border: none;
-    outline: none;
     font-size: 16px;
 }
 
 .status {
     font-size: 12px;
-    margin-top: 8px;
-    opacity: 0.7;
+    margin-top: 6px;
+    color: gold;
 }
 
-/* BUTTONS */
-.btn {
-    display: block;
-    width: 100%;
-    padding: 14px;
-    margin-top: 12px;
-    border-radius: 12px;
+/* TCG BUTTONS */
+.tcg {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.tcg button {
+    padding: 10px;
+    border-radius: 10px;
     border: 1px solid gold;
     background: transparent;
     color: white;
-    font-weight: 600;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.2s;
+    font-size: 13px;
 }
 
-.btn:hover {
-    background: rgba(255,215,0,0.1);
+/* MAIN BUTTONS */
+.btn {
+    display: block;
+    width: 100%;
+    margin-top: 12px;
+    padding: 16px;
+    border-radius: 14px;
+    border: 2px solid gold;
+    background: transparent;
+    color: white;
+    font-size: 16px;
 }
 
 .footer {
     margin-top: 20px;
     font-size: 11px;
-    opacity: 0.5;
+    opacity: 0.6;
 }
 </style>
 
@@ -87,16 +95,29 @@ input {
 
 <div class="container">
 
+<!-- LOGO -->
 <div class="logo">
-<img src="logo.png">
+<img src="Logo.png">
 </div>
 
+<!-- SEARCH -->
 <div id="box" class="search-box">
 <input id="search" placeholder="Ex: Pikachu sv2a / OP01-120">
 </div>
 
 <div id="status" class="status"></div>
 
+<!-- TCG -->
+<div class="tcg">
+<button>Pokémon</button>
+<button>One Piece</button>
+<button>Magic</button>
+<button>Dragon Ball</button>
+<button>Star Wars</button>
+<button>Lorcana</button>
+</div>
+
+<!-- SOURCES -->
 <button class="btn" onclick="openCM()">🔍 Cardmarket</button>
 <button class="btn" onclick="openEbay()">💰 eBay Sold</button>
 <button class="btn" onclick="openJP()">🇯🇵 CardRush</button>
