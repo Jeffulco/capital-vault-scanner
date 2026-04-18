@@ -8,55 +8,77 @@
 <style>
 body {
     margin: 0;
-    font-family: Arial;
-    background: linear-gradient(180deg,#0d2c5a,#1a3f7a);
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at top, #0f2f6b, #061733);
     color: white;
     text-align: center;
 }
 
 .container {
     padding: 20px;
+    max-width: 500px;
+    margin: auto;
 }
 
 .logo {
-    font-size: 28px;
-    font-weight: bold;
-    color: gold;
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
-input {
-    width: 80%;
-    padding: 12px;
-    border-radius: 8px;
-    border: none;
+.logo img {
+    width: 250px;
+}
+
+.search-box {
+    border: 2px solid rgba(255,215,0,0.3);
+    border-radius: 12px;
+    padding: 15px;
     margin-bottom: 10px;
+    transition: 0.3s;
 }
 
-.ready {
-    outline: 2px solid gold;
+.search-box.ready {
+    border: 2px solid gold;
 }
 
-.button {
-    display: block;
-    margin: 10px auto;
+input {
+    width: 100%;
     padding: 12px;
-    width: 80%;
     border-radius: 10px;
     border: none;
-    font-weight: bold;
-    cursor: pointer;
+    outline: none;
+    font-size: 16px;
 }
 
-.cm { background: #2c6cff; color: white; }
-.ebay { background: #28a745; color: white; }
-.jp { background: #d9534f; color: white; }
-.yuyu { background: purple; color: white; }
-
 .status {
-    margin-top: 10px;
     font-size: 12px;
+    margin-bottom: 15px;
     opacity: 0.7;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    border-radius: 12px;
+    border: 1px solid gold;
+    background: transparent;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    background: rgba(255,215,0,0.1);
+}
+
+.footer {
+    margin-top: 20px;
+    font-size: 12px;
+    opacity: 0.6;
 }
 </style>
 
@@ -66,16 +88,24 @@ input {
 
 <div class="container">
 
-<div class="logo">Capital Vault</div>
+<div class="logo">
+<img src="https://i.imgur.com/8Km9tLL.png">
+</div>
 
-<input id="search" placeholder="Ex: Pikachu sv2a">
+<div id="box" class="search-box">
+<input id="search" placeholder="Ex. Pikachu sv2a / OP01-120 / Charizard sv3">
+</div>
 
-<button class="button cm" onclick="openCM()">🔍 Voir Cardmarket</button>
-<button class="button ebay" onclick="openEbay()">💰 Voir ventes eBay</button>
-<button class="button jp" onclick="openJP()">🇯🇵 CardRush</button>
-<button class="button yuyu" onclick="openYuyu()">🇯🇵 Yuyutei</button>
+<div id="status" class="status"></div>
 
-<div class="status" id="status"></div>
+<button class="btn" onclick="openCM()">🔍 Cardmarket</button>
+<button class="btn" onclick="openEbay()">💰 eBay Sold</button>
+<button class="btn" onclick="openJP()">🇯🇵 CardRush</button>
+<button class="btn" onclick="openYuyu()">🇯🇵 Yuyutei</button>
+
+<div class="footer">
+Conversion ¥ → € (base 160)
+</div>
 
 </div>
 
@@ -85,11 +115,12 @@ let query = "";
 
 document.getElementById("search").addEventListener("input", function(){
     query = this.value.trim();
+
     if(query){
-        this.classList.add("ready");
-        document.getElementById("status").innerText = "Recherche prête";
+        document.getElementById("box").classList.add("ready");
+        document.getElementById("status").innerText = "Recherche prête ✔️";
     } else {
-        this.classList.remove("ready");
+        document.getElementById("box").classList.remove("ready");
         document.getElementById("status").innerText = "";
     }
 });
