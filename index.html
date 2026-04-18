@@ -594,30 +594,34 @@ function escapeHtml(str){
     .replaceAll(">","&gt;");
 }
 
-function buildBaseQuery(){
+function buildCardmarketQuery(){
   const parts = [
     document.getElementById("query").value.trim(),
     document.getElementById("nameField").value.trim(),
     document.getElementById("numberField").value.trim(),
-    document.getElementById("setField").value.trim(),
-    tcgKeyword()
+    document.getElementById("setField").value.trim()
   ].filter(Boolean);
 
   return parts.join(" ").replace(/\s+/g," ").trim();
 }
 
+function buildBaseQuery(){
+  const clean = buildCardmarketQuery();
+  return [clean, tcgKeyword()].filter(Boolean).join(" ").trim();
+}
+
 function buildJapanQuery(){
-  const base = buildBaseQuery();
-  if(tcg === "pokemon") return `${base} cardrush pokemon`;
-  if(tcg === "onepiece") return `${base} cardrush one piece`;
-  return `${base} cardrush`;
+  const clean = buildCardmarketQuery();
+  if(tcg === "pokemon") return `${clean} cardrush pokemon`;
+  if(tcg === "onepiece") return `${clean} cardrush one piece`;
+  return `${clean} cardrush`;
 }
 
 function buildYuyuQuery(){
-  const base = buildBaseQuery();
-  if(tcg === "pokemon") return `${base} yuyutei pokemon`;
-  if(tcg === "onepiece") return `${base} yuyutei one piece`;
-  return `${base} yuyutei`;
+  const clean = buildCardmarketQuery();
+  if(tcg === "pokemon") return `${clean} yuyutei pokemon`;
+  if(tcg === "onepiece") return `${clean} yuyutei one piece`;
+  return `${clean} yuyutei`;
 }
 
 function prepare(){
@@ -626,7 +630,7 @@ function prepare(){
     return;
   }
 
-  prepared = buildBaseQuery();
+  prepared = buildCardmarketQuery();
   document.getElementById("searchShell").classList.add("ready");
   document.getElementById("status").innerText = "Recherche prête ✔️";
 
@@ -635,7 +639,7 @@ function prepare(){
 }
 
 function openCM(){
-  const q = prepared || buildBaseQuery();
+  const q = prepared || buildCardmarketQuery();
   if(!q) return;
 
   let gamePath = "Pokemon";
@@ -650,7 +654,7 @@ function openCM(){
 }
 
 function openEbay(){
-  const q = prepared || buildBaseQuery();
+  const q = buildBaseQuery();
   if(!q) return;
   window.open("https://www.ebay.fr/sch/i.html?_nkw=" + encodeURIComponent(q) + "&LH_Sold=1&LH_Complete=1","_blank");
 }
