@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capital Vault Price Checker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Capital Vault</p>
+        <h1>Price Checker V1</h1>
+        <p class="subtitle">Outil perso multi-TCG pour lancer instantanément les bons checks Cardmarket, eBay Sold et CardRush.</p>
+      </div>
+      <button id="themeToggle" class="secondary-btn compact-btn" type="button" aria-label="Basculer le thème">🌙</button>
+    </header>
+
+    <main class="layout-grid">
+      <section class="card panel panel-form">
+        <div class="panel-header">
+          <h2>Recherche</h2>
+          <span class="status-badge">V1 gratuite</span>
+        </div>
+
+        <div class="tcg-selector" id="tcgSelector" role="tablist" aria-label="Choix du TCG">
+          <button class="tcg-pill active" data-tcg="pokemon" type="button">Pokémon</button>
+          <button class="tcg-pill" data-tcg="onepiece" type="button">One Piece</button>
+          <button class="tcg-pill" data-tcg="magic" type="button">Magic</button>
+          <button class="tcg-pill" data-tcg="dragonball" type="button">Dragon Ball</button>
+          <button class="tcg-pill" data-tcg="starwars" type="button">Star Wars</button>
+          <button class="tcg-pill" data-tcg="lorcana" type="button">Lorcana</button>
+        </div>
+
+        <form id="searchForm" class="form-grid">
+          <label>
+            <span>Nom de carte</span>
+            <input id="cardName" type="text" placeholder="Ex. Charizard ex / Monkey.D.Luffy" autocomplete="off" />
+          </label>
+
+          <label>
+            <span>Numéro</span>
+            <input id="cardNumber" type="text" placeholder="Ex. 231/193 ou OP01-120" autocomplete="off" />
+          </label>
+
+          <label>
+            <span>Set</span>
+            <input id="cardSet" type="text" placeholder="Ex. m2a / OP-01 / EB-01" autocomplete="off" />
+          </label>
+
+          <label>
+            <span>Langue</span>
+            <select id="language">
+              <option value="">Auto / non précisé</option>
+              <option value="fr">Français</option>
+              <option value="en">Anglais</option>
+              <option value="jp">Japonais</option>
+            </select>
+          </label>
+
+          <label class="full-width">
+            <span>Screenshot / photo (optionnel)</span>
+            <input id="cardImage" type="file" accept="image/*" />
+            <small>V1 : le fichier est mémorisé visuellement, sans OCR automatique.</small>
+          </label>
+
+          <label>
+            <span>Prix CardRush (¥) pour conversion rapide</span>
+            <input id="yenAmount" type="number" min="0" step="1" placeholder="Ex. 12800" />
+          </label>
+
+          <label>
+            <span>Taux moyen fixe</span>
+            <div class="rate-wrap">
+              <input id="yenRate" type="number" min="1" step="1" value="160" />
+              <span>¥ = 1 €</span>
+            </div>
+          </label>
+
+          <div class="full-width action-row">
+            <button class="primary-btn" type="submit">Lancer le price check</button>
+            <button class="secondary-btn" id="resetBtn" type="button">Réinitialiser</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card panel panel-results">
+        <div class="panel-header">
+          <h2>Résultat</h2>
+          <span id="querySummary" class="muted">Aucune recherche lancée pour l’instant.</span>
+        </div>
+
+        <div class="preview-wrap hidden" id="imagePreviewWrap">
+          <img id="imagePreview" alt="Aperçu du screenshot de carte" />
+        </div>
+
+        <div class="result-overview">
+          <div class="overview-item">
+            <span class="label">TCG</span>
+            <strong id="resultTcg">—</strong>
+          </div>
+          <div class="overview-item">
+            <span class="label">Requête normalisée</span>
+            <strong id="normalizedQuery">—</strong>
+          </div>
+          <div class="overview-item">
+            <span class="label">CardRush converti</span>
+            <strong id="convertedYen">—</strong>
+          </div>
+        </div>
+
+        <div class="result-cards">
+          <article class="source-card">
+            <div class="source-head">
+              <h3>Cardmarket</h3>
+              <span class="pill blue">EU</span>
+            </div>
+            <p id="cardmarketQuery" class="source-query">—</p>
+            <div class="button-stack">
+              <a id="cardmarketLink" class="primary-btn link-btn disabled-link" href="#" target="_blank" rel="noopener noreferrer">Ouvrir Cardmarket</a>
+              <button id="copyCardmarket" class="secondary-btn" type="button">Copier la recherche</button>
+            </div>
+          </article>
+
+          <article class="source-card">
+            <div class="source-head">
+              <h3>eBay Sold</h3>
+              <span class="pill red">Sold</span>
+            </div>
+            <p id="ebayQuery" class="source-query">—</p>
+            <div class="button-stack">
+              <a id="ebayLink" class="primary-btn link-btn disabled-link" href="#" target="_blank" rel="noopener noreferrer">Ouvrir eBay sold</a>
+              <button id="copyEbay" class="secondary-btn" type="button">Copier la recherche</button>
+            </div>
+          </article>
+
+          <article class="source-card">
+            <div class="source-head">
+              <h3>CardRush / Japon</h3>
+              <span class="pill gold">JP</span>
+            </div>
+            <p id="japanQuery" class="source-query">—</p>
+            <div class="button-stack">
+              <a id="japanLink" class="primary-btn link-btn disabled-link" href="#" target="_blank" rel="noopener noreferrer">Ouvrir la recherche Japon</a>
+              <button id="copyJapan" class="secondary-btn" type="button">Copier la recherche</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="card panel panel-history">
+        <div class="panel-header">
+          <h2>Historique local</h2>
+          <button id="clearHistory" class="secondary-btn compact-btn" type="button">Vider</button>
+        </div>
+        <div id="historyList" class="history-list">
+          <p class="muted">Aucune recherche sauvegardée.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <template id="historyItemTemplate">
+    <button class="history-item" type="button">
+      <div>
+        <strong class="history-title"></strong>
+        <p class="history-meta"></p>
+      </div>
+      <span class="history-tcg"></span>
+    </button>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
