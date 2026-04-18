@@ -8,37 +8,35 @@
 <style>
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Arial;
     background: radial-gradient(circle at top, #0f2f6b, #061733);
     color: white;
-    text-align: center;
 }
 
 .container {
-    padding: 20px;
-    max-width: 500px;
+    max-width: 480px;
     margin: auto;
+    padding: 20px;
+    text-align: center;
 }
 
-.logo {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
+/* LOGO */
 .logo img {
-    width: 250px;
+    width: 260px;
+    margin: 20px 0;
 }
 
+/* SEARCH */
 .search-box {
     border: 2px solid rgba(255,215,0,0.3);
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 15px;
-    margin-bottom: 10px;
     transition: 0.3s;
 }
 
 .search-box.ready {
     border: 2px solid gold;
+    box-shadow: 0 0 10px rgba(255,215,0,0.4);
 }
 
 input {
@@ -52,20 +50,21 @@ input {
 
 .status {
     font-size: 12px;
-    margin-bottom: 15px;
+    margin-top: 8px;
     opacity: 0.7;
 }
 
+/* BUTTONS */
 .btn {
     display: block;
     width: 100%;
     padding: 14px;
-    margin: 10px 0;
+    margin-top: 12px;
     border-radius: 12px;
     border: 1px solid gold;
     background: transparent;
     color: white;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 16px;
     cursor: pointer;
     transition: 0.2s;
@@ -77,8 +76,8 @@ input {
 
 .footer {
     margin-top: 20px;
-    font-size: 12px;
-    opacity: 0.6;
+    font-size: 11px;
+    opacity: 0.5;
 }
 </style>
 
@@ -89,11 +88,11 @@ input {
 <div class="container">
 
 <div class="logo">
-<img src="https://i.imgur.com/8Km9tLL.png">
+<img src="logo.png">
 </div>
 
 <div id="box" class="search-box">
-<input id="search" placeholder="Ex. Pikachu sv2a / OP01-120 / Charizard sv3">
+<input id="search" placeholder="Ex: Pikachu sv2a / OP01-120">
 </div>
 
 <div id="status" class="status"></div>
@@ -103,9 +102,7 @@ input {
 <button class="btn" onclick="openJP()">🇯🇵 CardRush</button>
 <button class="btn" onclick="openYuyu()">🇯🇵 Yuyutei</button>
 
-<div class="footer">
-Conversion ¥ → € (base 160)
-</div>
+<div class="footer">Capital Vault Tool</div>
 
 </div>
 
