@@ -1,843 +1,258 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Capital Vault</title>
-  <style>
-    :root{
-      --bg-top:#102b73;
-      --bg-mid:#0b225d;
-      --bg-deep:#08183f;
-      --panel:#10245ecc;
-      --panel-2:#0c1d4fd9;
-      --gold:#d7b35d;
-      --gold-soft:#f0d68f;
-      --white:#f8faff;
-      --muted:#c8d3ee;
-      --line:rgba(215,179,93,.45);
-      --line-strong:rgba(215,179,93,.95);
-      --shadow:0 12px 34px rgba(0,0,0,.24);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capital Vault</title>
 
-    * { box-sizing: border-box; }
+<style>
+body {
+  margin:0;
+  font-family:-apple-system, Arial, sans-serif;
+  color:white;
 
-    body{
-      margin:0;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-      color:var(--white);
-      min-height:100vh;
-      background:
-        radial-gradient(circle at top, var(--bg-top) 0%, var(--bg-mid) 38%, var(--bg-deep) 100%);
-    }
+  /* ✅ TON BLEU CAPITAL VAULT */
+  background: radial-gradient(
+    circle at 50% 0%,
+    #1a3f9c 0%,
+    #0b2a73 35%,
+    #071c4f 70%,
+    #04122f 100%
+  );
+}
 
-    .wrap{
-      max-width:540px;
-      margin:0 auto;
-      padding:18px 16px 28px;
-    }
+/* LAYOUT */
+.container {
+  display:flex;
+  gap:20px;
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
+}
 
-    .logo{
-      text-align:center;
-      margin:8px 0 14px;
-    }
+/* MOBILE */
+@media(max-width:900px){
+  .container{
+    flex-direction:column;
+  }
+}
 
-    .logo img{
-      width:min(350px, 92%);
-      height:auto;
-      display:inline-block;
-    }
+/* PANELS */
+.panel{
+  flex:1;
+  background:rgba(10,20,60,0.85);
+  border-radius:20px;
+  padding:20px;
+  border:1px solid rgba(255,215,0,0.2);
+}
 
-    .intro{
-      text-align:center;
-      color:var(--muted);
-      font-size:15px;
-      line-height:1.45;
-      margin:6px 8px 18px;
-    }
+/* LOGO */
+.logo{
+  text-align:center;
+  margin-bottom:15px;
+}
+.logo img{
+  width:280px;
+}
 
-    .panel{
-      background:linear-gradient(180deg, rgba(16,36,94,.94), rgba(10,22,58,.96));
-      border:1px solid var(--line);
-      border-radius:28px;
-      box-shadow:var(--shadow);
-      padding:18px;
-      backdrop-filter:blur(4px);
-    }
+/* INPUT */
+.search-box{
+  border:2px solid rgba(255,215,0,0.3);
+  border-radius:16px;
+  padding:10px;
+  margin-bottom:10px;
+}
 
-    .label{
-      text-align:left;
-      font-size:15px;
-      color:var(--white);
-      margin-bottom:10px;
-      font-weight:700;
-    }
+.search-row{
+  display:flex;
+  gap:10px;
+}
 
-    .search-shell{
-      border:2px solid var(--line);
-      border-radius:20px;
-      padding:12px;
-      transition:.2s ease;
-      background:rgba(7,16,43,.22);
-    }
+.search-row input{
+  flex:1;
+  padding:14px;
+  border-radius:10px;
+  border:none;
+  font-size:16px;
+}
 
-    .search-shell.ready{
-      border-color:var(--line-strong);
-      box-shadow:0 0 0 2px rgba(215,179,93,.08), 0 0 18px rgba(215,179,93,.16);
-    }
+.search-btn{
+  width:60px;
+  border:none;
+  border-radius:12px;
+  background:gold;
+  font-size:20px;
+}
 
-    .search-row{
-      display:flex;
-      gap:12px;
-      align-items:stretch;
-    }
+/* TCG */
+.tcg{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin:15px 0;
+}
 
-    .search-row input{
-      flex:1;
-      min-width:0;
-      width:auto;
-      border:none;
-      outline:none;
-      border-radius:18px;
-      background:rgba(255,255,255,.09);
-      color:var(--white);
-      padding:16px 18px;
-      font-size:17px;
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.05);
-    }
+.tcg button{
+  padding:12px;
+  border-radius:12px;
+  border:1px solid gold;
+  background:transparent;
+  color:white;
+}
 
-    .search-row input::placeholder{
-      color:#c7d2ef;
-      opacity:.82;
-    }
+/* BUTTONS */
+.btn{
+  width:100%;
+  padding:16px;
+  margin-top:10px;
+  border-radius:16px;
+  border:2px solid gold;
+  background:transparent;
+  color:white;
+  font-size:16px;
+}
 
-    .search-btn{
-      width:74px;
-      flex:0 0 74px;
-      border:none;
-      border-radius:22px;
-      background:linear-gradient(180deg, #f0cf74, #d3a947);
-      color:#21190b;
-      font-size:26px;
-      cursor:pointer;
-      box-shadow:0 10px 20px rgba(211,169,71,.25);
-    }
+/* STATUS */
+.status{
+  margin-top:10px;
+  font-size:12px;
+  color:gold;
+}
 
-    .tcg-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:10px;
-      margin:16px 0 10px;
-    }
+/* RESULT PANEL */
+.result-box{
+  margin-top:15px;
+  background:rgba(255,255,255,0.05);
+  padding:15px;
+  border-radius:15px;
+}
 
-    .tcg-btn{
-      border:1.5px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.04);
-      color:var(--white);
-      border-radius:20px;
-      padding:14px 8px;
-      font-size:13px;
-      font-weight:800;
-      cursor:pointer;
-      transition:.18s ease;
-      min-height:68px;
-      line-height:1.15;
-    }
+/* CONVERSION */
+.convert{
+  margin-top:15px;
+}
+.convert input{
+  width:100%;
+  padding:10px;
+  margin-top:5px;
+  border-radius:10px;
+  border:none;
+}
 
-    .tcg-btn span{
-      display:block;
-      font-size:11px;
-      margin-top:4px;
-      color:var(--muted);
-      font-weight:600;
-    }
+</style>
 
-    .tcg-btn.active{
-      border-color:var(--line-strong);
-      background:rgba(215,179,93,.11);
-      color:#fff4d7;
-      box-shadow:inset 0 0 0 1px rgba(215,179,93,.18);
-    }
-
-    .advanced-toggle{
-      width:100%;
-      margin-top:10px;
-      border:1.5px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.04);
-      color:var(--white);
-      border-radius:22px;
-      padding:18px 18px;
-      font-size:18px;
-      font-weight:800;
-      text-align:left;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-    }
-
-    .advanced-toggle .left{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-
-    .advanced{
-      display:none;
-      margin-top:12px;
-      gap:10px;
-      grid-template-columns:1fr 1fr;
-    }
-
-    .advanced.open{
-      display:grid;
-    }
-
-    .field{
-      text-align:left;
-    }
-
-    .field.full{
-      grid-column:1 / -1;
-    }
-
-    .field label{
-      display:block;
-      font-size:12px;
-      color:var(--gold-soft);
-      margin:0 0 6px;
-    }
-
-    .field input,
-    .field select{
-      width:100%;
-      border:none;
-      outline:none;
-      border-radius:14px;
-      background:rgba(255,255,255,.08);
-      color:var(--white);
-      padding:13px 14px;
-      font-size:14px;
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.05);
-    }
-
-    .field select option{
-      color:#111;
-    }
-
-    .actions{
-      display:flex;
-      gap:12px;
-      margin-top:16px;
-    }
-
-    .primary,
-    .secondary{
-      border:none;
-      border-radius:22px;
-      padding:18px 16px;
-      font-size:17px;
-      font-weight:800;
-      cursor:pointer;
-      flex:1;
-    }
-
-    .primary{
-      background:linear-gradient(180deg, #f0cf74, #d3a947);
-      color:#21190b;
-      box-shadow:0 10px 20px rgba(211,169,71,.18);
-    }
-
-    .primary.ready{
-      box-shadow:0 0 0 2px rgba(215,179,93,.08), 0 0 18px rgba(215,179,93,.15);
-    }
-
-    .secondary{
-      background:rgba(255,255,255,.06);
-      color:var(--white);
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
-    }
-
-    .hint{
-      text-align:left;
-      margin-top:12px;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.45;
-    }
-
-    .status{
-      min-height:18px;
-      margin-top:10px;
-      text-align:left;
-      color:var(--gold-soft);
-      font-size:12px;
-      opacity:.95;
-    }
-
-    .source-list{
-      margin-top:18px;
-      display:grid;
-      gap:14px;
-    }
-
-    .source-btn{
-      width:100%;
-      border:2px solid var(--line);
-      background:linear-gradient(180deg, rgba(13,31,79,.96), rgba(8,20,58,.98));
-      color:var(--white);
-      border-radius:24px;
-      padding:20px 18px;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      box-shadow:var(--shadow);
-    }
-
-    .source-left{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      text-align:left;
-    }
-
-    .source-icon{
-      font-size:30px;
-      line-height:1;
-    }
-
-    .source-title{
-      font-size:18px;
-      font-weight:900;
-      line-height:1.1;
-    }
-
-    .source-sub{
-      margin-top:4px;
-      font-size:12px;
-      color:var(--muted);
-    }
-
-    .arrow{
-      font-size:28px;
-      color:var(--gold-soft);
-      line-height:1;
-    }
-
-    .retained{
-      margin-top:18px;
-      background:rgba(255,255,255,.045);
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:22px;
-      padding:18px;
-      text-align:left;
-    }
-
-    .retained h3,
-    .conversion h3{
-      margin:0 0 10px;
-      color:var(--gold-soft);
-      font-size:17px;
-      font-weight:900;
-    }
-
-    .retained p{
-      margin:0;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.5;
-    }
-
-    .conversion{
-      margin-top:18px;
-      background:rgba(255,255,255,.045);
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:22px;
-      padding:18px;
-      text-align:left;
-    }
-
-    .conv-row{
-      display:grid;
-      grid-template-columns:1fr auto 1fr auto;
-      gap:10px;
-      align-items:center;
-    }
-
-    .conv-row input{
-      width:100%;
-      border:none;
-      outline:none;
-      border-radius:16px;
-      background:rgba(255,255,255,.08);
-      color:var(--white);
-      padding:14px 14px;
-      font-size:16px;
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.05);
-    }
-
-    .conv-operator{
-      font-size:28px;
-      font-weight:900;
-      color:var(--gold-soft);
-      line-height:1;
-    }
-
-    .conv-result{
-      margin-top:12px;
-      font-size:18px;
-      font-weight:900;
-      color:#fff4d7;
-    }
-
-    .conv-note{
-      margin-top:8px;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.4;
-    }
-
-    .foot{
-      margin-top:18px;
-      text-align:center;
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.45;
-    }
-
-    @media (max-width: 520px){
-      .wrap{
-        padding:16px 14px 28px;
-      }
-
-      .logo img{
-        width:min(320px, 94%);
-      }
-
-      .search-row input{
-        font-size:16px;
-        padding:15px 16px;
-      }
-
-      .search-btn{
-        width:68px;
-        flex-basis:68px;
-      }
-
-      .tcg-grid{
-        grid-template-columns:repeat(3,1fr);
-      }
-
-      .advanced.open{
-        grid-template-columns:1fr;
-      }
-
-      .conv-row{
-        grid-template-columns:1fr;
-      }
-
-      .conv-operator,
-      .conv-equals{
-        justify-self:start;
-      }
-
-      .actions{
-        flex-direction:row;
-      }
-    }
-  </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="logo">
-      <img src="Logo.png" alt="Capital Vault">
-    </div>
 
-    <div class="intro">
-      Price checker personnel, rapide et gratuit pour lancer instantanément les bons checks
-      Cardmarket, eBay Sold, CardRush et Yuyutei.
-    </div>
+<div class="container">
 
-    <div class="panel">
-      <div class="label">Recherche libre</div>
+<!-- LEFT -->
+<div class="panel">
 
-      <div id="searchShell" class="search-shell">
-        <div class="search-row">
-          <input
-            id="freeQuery"
-            type="text"
-            placeholder="Ex. Pikachu McDonald's Promo / OP01-120 / Charizard sv3"
-            autocomplete="off"
-          />
-          <button id="searchBtn" class="search-btn" type="button" title="Préparer la recherche">⌕</button>
-        </div>
-      </div>
+<div class="logo">
+<img src="Logo.png">
+</div>
 
-      <div class="tcg-grid">
-        <button class="tcg-btn active" data-tcg="pokemon">Pokémon<span>Priorité</span></button>
-        <button class="tcg-btn" data-tcg="onepiece">One Piece<span>Priorité</span></button>
-        <button class="tcg-btn" data-tcg="magic">Magic<span>Disponible</span></button>
-        <button class="tcg-btn" data-tcg="dbz">Dragon Ball<span>Disponible</span></button>
-        <button class="tcg-btn" data-tcg="starwars">Star Wars<span>Disponible</span></button>
-        <button class="tcg-btn" data-tcg="lorcana">Lorcana<span>Disponible</span></button>
-      </div>
+<div class="search-box">
+<div class="search-row">
+<input id="search" placeholder="Ex. Pikachu sv2a / OP01-120">
+<button class="search-btn" onclick="prepare()">🔍</button>
+</div>
+</div>
 
-      <button id="advancedToggle" class="advanced-toggle" type="button">
-        <span class="left"><span style="font-size:18px;">＋</span> Options avancées</span>
-        <span id="advancedChevron">▾</span>
-      </button>
+<div class="tcg">
+<button>Pokémon</button>
+<button>One Piece</button>
+<button>Magic</button>
+<button>Dragon Ball</button>
+<button>Star Wars</button>
+<button>Lorcana</button>
+</div>
 
-      <div id="advancedBlock" class="advanced">
-        <div class="field">
-          <label>Nom</label>
-          <input id="nameField" type="text" placeholder="Pikachu / Luffy / Charizard">
-        </div>
-        <div class="field">
-          <label>Numéro</label>
-          <input id="numberField" type="text" placeholder="sv2a / OP01-120 / 151">
-        </div>
-        <div class="field full">
-          <label>Set</label>
-          <input id="setField" type="text" placeholder="151 / sv2a / OP01">
-        </div>
-        <div class="field">
-          <label>Langue</label>
-          <select id="langField">
-            <option value="">Auto / non précisé</option>
-            <option value="fr">Français</option>
-            <option value="en">Anglais</option>
-            <option value="jp">Japonais</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Prix JP (¥)</label>
-          <input id="yenFieldAdvanced" type="number" inputmode="numeric" placeholder="12800">
-        </div>
-      </div>
+<button class="btn" onclick="prepare()">Préparer la recherche</button>
+<button class="btn" onclick="reset()">Réinitialiser</button>
 
-      <div class="actions">
-        <button id="prepareBtn" class="primary" type="button">Préparer la recherche</button>
-        <button id="resetBtn" class="secondary" type="button">Réinitialiser</button>
-      </div>
+<div class="status" id="status"></div>
 
-      <div class="hint">
-        Entre un nom, un numéro, un set… même incomplet.  
-        L’outil te prépare ensuite les bons accès.
-      </div>
+</div>
 
-      <div id="status" class="status"></div>
+<!-- RIGHT -->
+<div class="panel">
 
-      <div class="source-list">
-        <button class="source-btn" id="cmBtn" type="button">
-          <div class="source-left">
-            <div class="source-icon">🔎</div>
-            <div>
-              <div class="source-title">Cardmarket</div>
-              <div class="source-sub">Europe / tendance marché</div>
-            </div>
-          </div>
-          <div class="arrow">›</div>
-        </button>
+<button class="btn" onclick="openCM()">🔎 Cardmarket</button>
+<button class="btn" onclick="openEbay()">💰 eBay Sold</button>
+<button class="btn" onclick="openJP()">🇯🇵 CardRush</button>
+<button class="btn" onclick="openYuyu()">🇯🇵 Yuyutei</button>
 
-        <button class="source-btn" id="ebayBtn" type="button">
-          <div class="source-left">
-            <div class="source-icon">💰</div>
-            <div>
-              <div class="source-title">eBay Sold</div>
-              <div class="source-sub">Ventes réalisées</div>
-            </div>
-          </div>
-          <div class="arrow">›</div>
-        </button>
+<div class="result-box" id="result">
+Aucune recherche préparée
+</div>
 
-        <button class="source-btn" id="jpBtn" type="button">
-          <div class="source-left">
-            <div class="source-icon">🇯🇵</div>
-            <div>
-              <div class="source-title">Japan (CardRush)</div>
-              <div class="source-sub">Prix JP / recherche ciblée</div>
-            </div>
-          </div>
-          <div class="arrow">›</div>
-        </button>
+<div class="convert">
+<label>Conversion ¥ → €</label>
+<input id="yen" placeholder="¥">
+<input id="rate" value="160">
+<div id="eur">— €</div>
+</div>
 
-        <button class="source-btn" id="yuyuBtn" type="button">
-          <div class="source-left">
-            <div class="source-icon">🇯🇵</div>
-            <div>
-              <div class="source-title">Japan (Yuyutei)</div>
-              <div class="source-sub">Complément boutique JP</div>
-            </div>
-          </div>
-          <div class="arrow">›</div>
-        </button>
-      </div>
+</div>
 
-      <div class="retained">
-        <h3>Recherche retenue</h3>
-        <p id="retainedText">
-          Aucune recherche préparée pour l’instant.<br><br>
-          Tu peux taper librement ou préciser avec les options avancées. L’outil construit ensuite la recherche la plus propre possible.
-        </p>
-      </div>
+</div>
 
-      <div class="conversion">
-        <h3>Conversion ¥ → €</h3>
-        <div class="conv-row">
-          <input id="yenField" type="number" inputmode="numeric" placeholder="12800">
-          <div class="conv-operator">÷</div>
-          <input id="rateField" type="number" inputmode="numeric" value="160">
-          <div class="conv-operator conv-equals">=</div>
-        </div>
-        <div id="convResult" class="conv-result">— €</div>
-        <div class="conv-note">
-          Taux moyen fixe, modifiable. Par défaut : 160 ¥ = 1 €.
-        </div>
-      </div>
+<script>
 
-      <div class="foot">
-        Version Capital Vault — pensée pour le live : rapide, gratuite et simple à utiliser sur téléphone comme sur PC.
-      </div>
-    </div>
-  </div>
+let query = "";
 
-  <script>
-    const freeQuery = document.getElementById('freeQuery');
-    const nameField = document.getElementById('nameField');
-    const numberField = document.getElementById('numberField');
-    const setField = document.getElementById('setField');
-    const langField = document.getElementById('langField');
-    const yenField = document.getElementById('yenField');
-    const yenFieldAdvanced = document.getElementById('yenFieldAdvanced');
-    const rateField = document.getElementById('rateField');
+function prepare(){
+  query = document.getElementById("search").value;
 
-    const searchShell = document.getElementById('searchShell');
-    const status = document.getElementById('status');
-    const retainedText = document.getElementById('retainedText');
-    const prepareBtn = document.getElementById('prepareBtn');
-    const resetBtn = document.getElementById('resetBtn');
-    const searchBtn = document.getElementById('searchBtn');
+  if(query){
+    document.getElementById("status").innerText = "Recherche prête ✔️";
+    document.getElementById("result").innerText = query;
+  }
+}
 
-    const advancedToggle = document.getElementById('advancedToggle');
-    const advancedBlock = document.getElementById('advancedBlock');
-    const advancedChevron = document.getElementById('advancedChevron');
+function reset(){
+  document.getElementById("search").value="";
+  document.getElementById("status").innerText="";
+  document.getElementById("result").innerText="Aucune recherche préparée";
+}
 
-    const cmBtn = document.getElementById('cmBtn');
-    const ebayBtn = document.getElementById('ebayBtn');
-    const jpBtn = document.getElementById('jpBtn');
-    const yuyuBtn = document.getElementById('yuyuBtn');
+function build(){
+  return encodeURIComponent(query + " pokemon card");
+}
 
-    const convResult = document.getElementById('convResult');
+function openCM(){
+  window.open("https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=" + build());
+}
 
-    let selectedTcg = 'pokemon';
-    let preparedQuery = '';
+function openEbay(){
+  window.open("https://www.ebay.fr/sch/i.html?_nkw=" + build() + "&LH_Sold=1");
+}
 
-    const tcgButtons = document.querySelectorAll('.tcg-btn');
+function openJP(){
+  window.open("https://www.google.com/search?q=" + build() + "+cardrush");
+}
 
-    tcgButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        tcgButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        selectedTcg = btn.dataset.tcg;
-        refreshPreparedState();
-      });
-    });
+function openYuyu(){
+  window.open("https://www.google.com/search?q=" + build() + "+yuyutei");
+}
 
-    advancedToggle.addEventListener('click', () => {
-      advancedBlock.classList.toggle('open');
-      advancedChevron.textContent = advancedBlock.classList.contains('open') ? '▴' : '▾';
-    });
+/* conversion */
+document.getElementById("yen").addEventListener("input", convert);
+document.getElementById("rate").addEventListener("input", convert);
 
-    [freeQuery, nameField, numberField, setField, langField].forEach(el => {
-      el.addEventListener('input', refreshPreparedState);
-      el.addEventListener('change', refreshPreparedState);
-    });
+function convert(){
+  let yen = document.getElementById("yen").value;
+  let rate = document.getElementById("rate").value;
 
-    searchBtn.addEventListener('click', prepareSearch);
-    prepareBtn.addEventListener('click', prepareSearch);
-    freeQuery.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        prepareSearch();
-      }
-    });
+  if(yen && rate){
+    document.getElementById("eur").innerText = (yen/rate).toFixed(2) + " €";
+  }
+}
 
-    resetBtn.addEventListener('click', () => {
-      freeQuery.value = '';
-      nameField.value = '';
-      numberField.value = '';
-      setField.value = '';
-      langField.value = '';
-      yenFieldAdvanced.value = '';
-      preparedQuery = '';
-      status.textContent = '';
-      retainedText.innerHTML = `Aucune recherche préparée pour l’instant.<br><br>Tu peux taper librement ou préciser avec les options avancées. L’outil construit ensuite la recherche la plus propre possible.`;
-      searchShell.classList.remove('ready');
-      prepareBtn.classList.remove('ready');
-      freeQuery.focus();
-    });
+</script>
 
-    function hasSearchContent() {
-      return [
-        freeQuery.value.trim(),
-        nameField.value.trim(),
-        numberField.value.trim(),
-        setField.value.trim()
-      ].some(Boolean);
-    }
-
-    function refreshPreparedState() {
-      if (hasSearchContent()) {
-        searchShell.classList.add('ready');
-        prepareBtn.classList.add('ready');
-        status.textContent = 'Recherche prête ✔️';
-      } else {
-        searchShell.classList.remove('ready');
-        prepareBtn.classList.remove('ready');
-        status.textContent = '';
-        preparedQuery = '';
-      }
-    }
-
-    function getTcgKeyword() {
-      switch (selectedTcg) {
-        case 'onepiece': return 'one piece card';
-        case 'magic': return 'magic the gathering card';
-        case 'dbz': return 'dragon ball card';
-        case 'starwars': return 'star wars card';
-        case 'lorcana': return 'lorcana card';
-        default: return 'pokemon card';
-      }
-    }
-
-    function buildBaseQuery() {
-      const parts = [
-        freeQuery.value.trim(),
-        nameField.value.trim(),
-        numberField.value.trim(),
-        setField.value.trim(),
-        getTcgKeyword()
-      ].filter(Boolean);
-
-      return parts.join(' ').replace(/\s+/g, ' ').trim();
-    }
-
-    function buildJapanQuery() {
-      const base = buildBaseQuery();
-      if (selectedTcg === 'pokemon') return `${base} cardrush pokemon`;
-      if (selectedTcg === 'onepiece') return `${base} cardrush one piece`;
-      return `${base} cardrush`;
-    }
-
-    function buildYuyuQuery() {
-      const base = buildBaseQuery();
-      if (selectedTcg === 'pokemon') return `${base} yuyutei pokemon`;
-      if (selectedTcg === 'onepiece') return `${base} yuyutei one piece`;
-      return `${base} yuyutei`;
-    }
-
-    function prepareSearch() {
-      if (!hasSearchContent()) {
-        status.textContent = 'Entre au moins un nom, numéro ou set.';
-        return;
-      }
-
-      preparedQuery = buildBaseQuery();
-      searchShell.classList.add('ready');
-      prepareBtn.classList.add('ready');
-      status.textContent = 'Recherche prête ✔️';
-
-      retainedText.innerHTML = `
-        TCG détecté : <strong>${labelTcg(selectedTcg)}</strong><br><br>
-        Recherche : <strong>${escapeHtml(preparedQuery)}</strong>
-      `;
-    }
-
-    function labelTcg(tcg) {
-      switch (tcg) {
-        case 'onepiece': return 'One Piece';
-        case 'magic': return 'Magic';
-        case 'dbz': return 'Dragon Ball';
-        case 'starwars': return 'Star Wars';
-        case 'lorcana': return 'Lorcana';
-        default: return 'Pokémon';
-      }
-    }
-
-    function escapeHtml(str) {
-      return str
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;');
-    }
-
-    cmBtn.addEventListener('click', () => {
-      const q = preparedQuery || buildBaseQuery();
-      if (!q) return;
-      const url =
-        selectedTcg === 'pokemon'
-          ? `https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=${encodeURIComponent(q)}`
-          : `https://www.cardmarket.com/en/${cardmarketGamePath(selectedTcg)}/Products/Search?searchString=${encodeURIComponent(q)}`;
-      window.open(url, '_blank');
-    });
-
-    ebayBtn.addEventListener('click', () => {
-      const q = preparedQuery || buildBaseQuery();
-      if (!q) return;
-      const url = `https://www.ebay.fr/sch/i.html?_nkw=${encodeURIComponent(q)}&LH_Sold=1&LH_Complete=1`;
-      window.open(url, '_blank');
-    });
-
-    jpBtn.addEventListener('click', () => {
-      const q = buildJapanQuery();
-      if (!q.trim()) return;
-      const url = `https://www.google.com/search?q=${encodeURIComponent(q)}`;
-      window.open(url, '_blank');
-    });
-
-    yuyuBtn.addEventListener('click', () => {
-      const q = buildYuyuQuery();
-      if (!q.trim()) return;
-      const url = `https://www.google.com/search?q=${encodeURIComponent(q)}`;
-      window.open(url, '_blank');
-    });
-
-    function cardmarketGamePath(tcg) {
-      switch (tcg) {
-        case 'onepiece': return 'OnePiece';
-        case 'magic': return 'Magic';
-        case 'lorcana': return 'Lorcana';
-        default: return 'Pokemon';
-      }
-    }
-
-    function updateConversion() {
-      if (yenFieldAdvanced.value && !yenField.value) {
-        yenField.value = yenFieldAdvanced.value;
-      }
-
-      const yen = parseFloat(yenField.value);
-      const rate = parseFloat(rateField.value);
-
-      if (!isNaN(yen) && !isNaN(rate) && rate > 0) {
-        const eur = yen / rate;
-        convResult.textContent = `${eur.toFixed(2)} €`;
-      } else {
-        convResult.textContent = '— €';
-      }
-    }
-
-    yenField.addEventListener('input', updateConversion);
-    yenFieldAdvanced.addEventListener('input', () => {
-      yenField.value = yenFieldAdvanced.value;
-      updateConversion();
-    });
-    rateField.addEventListener('input', updateConversion);
-
-    refreshPreparedState();
-    updateConversion();
-  </script>
 </body>
 </html>
